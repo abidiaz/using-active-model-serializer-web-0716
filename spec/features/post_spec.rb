@@ -1,48 +1,56 @@
 require 'rails_helper'
 
-describe 'navigate' do
-  before do
-    @post = Post.create(title: "My Post", description: "My post desc")
-  end
-
-  it 'shows the title on the show page in a h1 tag' do
-    visit post_path(@post)
-    expect(page).to have_css("h1", text: "My Post")
-  end
-
-  it 'to post pages' do
-    visit post_path(@post)
-    expect(page.status_code).to eq(200)
-  end
-
-  it 'shows the description on the show page in a p tag' do
-    visit post_path(@post)
-    expect(page).to have_css("p", text: "My post desc")
+describe 'posts/index' do
+  it 'shows all posts' do
+    posts = []
+    posts << Post.create(title: "Awesome Post", description: "This is my awesome post")
+    expect(posts.length).to eq(1)
   end
 end
+# describe 'navigate' do
+#   before do
+#     author = Author.create(name: "Test Guy")
+#     @post = Post.create(title: "My Post", description: "My post desc", author: author.id)
+#   end
 
-describe 'form' do
-  it 'shows a new form that submits content and redirects and prints out params' do
-    visit new_post_path
+#   it 'shows the title on the show page in a h1 tag' do
+#     visit post_path(@post)
+#     expect(page).to have_css("h1", text: "My Post")
+#   end
 
-    fill_in 'title', with: "My post title"
-    fill_in 'description', with: "My post description"
+#   it 'to post pages' do
+#     visit post_path(@post)
+#     expect(page.status_code).to eq(200)
+#   end
 
-    click_on "Submit Post"
+#   it 'shows the description on the show page in a p tag' do
+#     visit post_path(@post)
+#     expect(page).to have_css("p", text: "My post desc")
+#   end
+# end
 
-    expect(page).to have_content("My post title")
-  end
+# describe 'form' do
+#   it 'shows a new form that submits content and redirects and prints out params' do
+#     visit new_post_path
 
-  it 'shows a new form that submits content and redirects and prints out params' do
-    @post = Post.create(title: "My Post", description: "My post desc")
+#     fill_in 'title', with: "My post title"
+#     fill_in 'description', with: "My post description"
 
-    visit edit_post_path(@post)
+#     click_on "Submit Post"
 
-    fill_in 'post[title]', with: "My edit"
-    fill_in 'post[description]', with: "My post description"
+#     expect(page).to have_content("My post title")
+#   end
 
-    click_on "Update Post"
+#   it 'shows a new form that submits content and redirects and prints out params' do
+#     @post = Post.create(title: "My Post", description: "My post desc")
 
-    expect(page).to have_content("My edit")
-  end
-end
+#     visit edit_post_path(@post)
+
+#     fill_in 'post[title]', with: "My edit"
+#     fill_in 'post[description]', with: "My post description"
+
+#     click_on "Update Post"
+
+#     expect(page).to have_content("My edit")
+#   end
+# end
